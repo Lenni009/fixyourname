@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Fix your name</title>
+	<link rel="stylesheet" href="./styles.css">
+  <script>
+        function showName() {
+            const name = document.getElementById("name_input").value
+            const platform = document.getElementById("platform_input").value
+            const mode = document.getElementById("gamemode_input").value
+            document.getElementById("name").innerHTML = name
+            document.getElementById("platform").innerHTML = name
+            document.getElementById("gamemode").innerHTML = name
+        }
+  </script>
+</head>
+
+<body>
+	<div class="container" style="width: min(500px, 90%);">
+      <h1 class="title">Fix your name</h1>
+        <form>
+          <label for="name_input">Enter your name:</label>
+          <input type="text" id="name_input">
+          <select id="platform_input">
+            <option value="">
+            <option value="PC">PC
+            <option value="PS">PS
+            <option value="XB">Xbox
+          </select>
+          <select id="gamemode_input">
+            <option value="">
+            <option value="Normal">Normal
+            <option value="Survival">Survival
+            <option value="Permadeath">Permadeath
+            <option value="Creative">Creative
+          </select>
+        </form>
+        <div class="actions hide" style="display: none;">
+            <input class="button is-primary" type="submit" value="Show Hub-Tag" onclick="showName()">
+            <input class="button is-warning" type="reset" value="Reset Glyphs" onclick="">
+        </div>
+        <div id="output" style="display: none">
+            Paste this into any text chat on the EisHub server:
+          <div class="Name">/nick <output id="name"></output> <output id="platform"></output>:<output id="gamemode"></output></div>
+        </div>
+    </div>
+</body>
+
+</html>
