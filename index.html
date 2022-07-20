@@ -12,8 +12,8 @@
             const platform = document.getElementById("platform_input").value
             const mode = document.getElementById("gamemode_input").value
             document.getElementById("name").innerHTML = name
-            document.getElementById("platform").innerHTML = name
-            document.getElementById("gamemode").innerHTML = name
+            document.getElementById("platform").innerHTML = platform
+            document.getElementById("gamemode").innerHTML = mode
         }
   </script>
 </head>
@@ -47,8 +47,8 @@
 		</div>
         </form>
         <div class="actions hide">
-            <input class="button is-primary" type="submit" value="Show Hub-Tag" onclick="showName()">
-            <input class="button is-warning" type="reset" value="Reset Glyphs" onclick="">
+            <input class="button is-primary" type="submit" value="Show Name" onclick="showName()">
+            <input class="button is-warning" type="reset" value="Reset Inputs" onclick="">
         </div>
         <div id="output">
             Paste this into any text chat on the EisHub server:
