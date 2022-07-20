@@ -2,49 +2,85 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Fix your name</title>
-	<link rel="stylesheet" href="./styles.css">
-  <script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Fix your name</title>
+    <link rel="stylesheet" href="./styles.css">
+    <script>
         function showName() {
-            const name = document.getElementById("name_input").value
-            const platform = document.getElementById("platform_input").value
-            const mode = document.getElementById("gamemode_input").value
+            let name = document.getElementById("name_input").value
+            let platform = document.getElementById("platform_input").value
+            let mode = document.getElementById("gamemode_input").value
+            let fullName = name + ' ' + platform + ':' + mode
+            if (fullName.length > 32) {
+                mode = mode.substring(0, 1)
+                if (mode == 'P') {
+                    mode = 'PD';
+                }
+                let fullName = name + ' ' + platform + ':' + mode
+                if (fullName.length > 32) {
+                    document.getElementById('btn').innerHTML = 'Too long!'
+                    document.getElementById('btn').style.backgroundColor = 'red'
+                    setTimeout(() => {
+                        document.getElementById('btn').innerHTML = 'Copy command'
+                        document.getElementById('btn').style.backgroundColor = ''
+                    }, 1500)
+                }
+            }
+
+
+
+
+
+
+
+
             document.getElementById("name").innerHTML = name
             document.getElementById("platform").innerHTML = platform
             document.getElementById("gamemode").innerHTML = mode
         }
-  </script>
+
+        // copy text button, needs to be a div with id="wikiText"
+        function copyText(codeId, inputId) {
+            let copyTextContent = document.getElementById(codeId).innerText
+            navigator.clipboard.writeText(copyTextContent)
+
+            document.getElementById(inputId).innerHTML = 'Copied!'
+            setTimeout(() => {
+                document.getElementById(inputId).innerHTML = 'Copy command'
+            }, 1500)
+        }
+
+    </script>
 </head>
 
 <body>
-	<div class="container" style="width: min(500px, 90%);">
-      <h1 class="title">Fix your name</h1>
+    <div class="container" style="width: min(500px, 90%);">
+        <h1 class="title">Fix your name</h1>
         <form>
-	<div>
-          <label for="name_input">Enter your name:</label>
-          <input type="text" id="name_input">
-		</div>
-	<div>
-          <label for="platform_input">Select your platform:</label>
-		<select id="platform_input">
-            <option value="">
-            <option value="PC">PC
-            <option value="PS">PS
-            <option value="XB">Xbox
-          </select>
-		</div>
-	<div>
-          <label for="gamemode_input">Select your game mode:</label>
-          <select id="gamemode_input">
-            <option value="">
-            <option value="Normal">Normal
-            <option value="Survival">Survival
-            <option value="Permadeath">Permadeath
-            <option value="Creative">Creative
-          </select>
-		</div>
+            <div>
+                <label for="name_input">Enter your name:</label>
+                <input type="text" id="name_input">
+            </div>
+            <div>
+                <label>Select your platform:</label>
+                <select id="platform_input">
+                    <option value="">
+                    <option value="PC">PC
+                    <option value="PS">PS
+                    <option value="XB">Xbox
+                </select>
+            </div>
+            <div>
+                <label>Select your game mode:</label>
+                <select id="gamemode_input">
+                    <option value="">
+                    <option value="Normal">Normal
+                    <option value="Survival">Survival
+                    <option value="Permadeath">Permadeath
+                    <option value="Creative">Creative
+                </select>
+            </div>
         </form>
         <div class="actions hide">
             <input class="button is-primary" type="submit" value="Show Name" onclick="showName()">
@@ -52,7 +88,12 @@
         </div>
         <div id="output">
             Paste this into any text chat on the EisHub server:
-          <div class="Name">/nick <output id="name"></output> <output id="platform"></output>:<output id="gamemode"></output></div>
+            <div class="Name" id="outputDiv">/nick <output id="name"></output> <output id="platform"></output>:<output
+                    id="gamemode"></output></div>
+        </div>
+        <div>
+            <button id="btn" class="button is-outlined is-primary" onclick="copyText('outputDiv', 'btn')">Copy
+                wikicode</button>
         </div>
     </div>
 </body>
