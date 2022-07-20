@@ -22,14 +22,21 @@
 	<div class="container" style="width: min(500px, 90%);">
       <h1 class="title">Fix your name</h1>
         <form>
+	<div>
           <label for="name_input">Enter your name:</label>
           <input type="text" id="name_input">
-          <select id="platform_input">
+		</div>
+	<div>
+          <label for="platform_input">Select your platform:</label>
+		<select id="platform_input">
             <option value="">
             <option value="PC">PC
             <option value="PS">PS
             <option value="XB">Xbox
           </select>
+		</div>
+	<div>
+          <label for="gamemode_input">Select your game mode:</label>
           <select id="gamemode_input">
             <option value="">
             <option value="Normal">Normal
@@ -37,8 +44,9 @@
             <option value="Permadeath">Permadeath
             <option value="Creative">Creative
           </select>
+		</div>
         </form>
-        <div class="actions hide" style="display: none;">
+        <div class="actions hide">
             <input class="button is-primary" type="submit" value="Show Hub-Tag" onclick="showName()">
             <input class="button is-warning" type="reset" value="Reset Glyphs" onclick="">
         </div>
