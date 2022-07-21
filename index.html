@@ -46,14 +46,9 @@
         }
 
         function resetInputs() {
-            const input = document.getElementsByTagName("input")
-            const select = document.getElementsByTagName("select")
-            for (const element of input) {
-                element.value = ''
-            }
-            for (const element of select) {
-                element.value = ''
-            }
+            document.getElementById("name_input").value = ''
+            document.getElementById("platform_input").value = ''
+            document.getElementById("gamemode_input").value = ''
         }
     </script>
 </head>
