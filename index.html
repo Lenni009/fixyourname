@@ -17,23 +17,7 @@
                 if (mode == 'P') {
                     mode = 'PD';
                 }
-                let fullName = name + ' ' + platform + ':' + mode
-                if (fullName.length > 32) {
-                    document.getElementById('btn').innerHTML = 'Too long!'
-                    document.getElementById('btn').style.backgroundColor = 'red'
-                    setTimeout(() => {
-                        document.getElementById('btn').innerHTML = 'Copy command'
-                        document.getElementById('btn').style.backgroundColor = ''
-                    }, 1500)
-                }
             }
-
-
-
-
-
-
-
 
             document.getElementById("name").innerHTML = name
             document.getElementById("platform").innerHTML = platform
@@ -42,7 +26,17 @@
 
         // copy text button, needs to be a div with id="wikiText"
         function copyText(codeId, inputId) {
-            let copyTextContent = document.getElementById(codeId).innerText
+            const copyTextContent = document.getElementById(codeId).innerText
+            const fullName = document.getElementById('outputDiv').innerText
+            if (fullName.length > 32) {
+                document.getElementById(inputId).innerHTML = 'Too long!'
+                document.getElementById(inputId).style.backgroundColor = 'red'
+                setTimeout(() => {
+                    document.getElementById(inputId).innerHTML = 'Copy command'
+                    document.getElementById(inputId).style.backgroundColor = ''
+                }, 1500)
+                return
+            }
             navigator.clipboard.writeText(copyTextContent)
 
             document.getElementById(inputId).innerHTML = 'Copied!'
@@ -50,7 +44,6 @@
                 document.getElementById(inputId).innerHTML = 'Copy command'
             }, 1500)
         }
-
     </script>
 </head>
 
