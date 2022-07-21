@@ -44,6 +44,17 @@
                 document.getElementById(inputId).innerHTML = 'Copy command'
             }, 1500)
         }
+
+        function resetInputs() {
+            const input = document.getElementsByTagName("input")
+            const select = document.getElementsByTagName("select")
+            for (const element of input) {
+                element.value = ''
+            }
+            for (const element of select) {
+                element.value = ''
+            }
+        }
     </script>
 </head>
 
@@ -77,7 +88,7 @@
         </form>
         <div class="actions hide">
             <input class="button is-primary" type="submit" value="Show Name" onclick="showName()">
-            <input class="button is-warning" type="reset" value="Reset Inputs" onclick="">
+            <input class="button is-warning" type="reset" value="Reset Inputs" onclick="resetInputs()">
         </div>
         <div id="output">
             Paste this into any text chat on the EisHub server:
