@@ -49,3 +49,10 @@ button {
     font-size: large;
     margin: 5px 0px;
 }
+
+.error {
+    font-size: large;
+    background-color: rgb(180, 0, 0);
+    padding: 2px 10px;
+    color:white;
+}

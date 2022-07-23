@@ -11,8 +11,10 @@
             let name = document.getElementById("name_input").value
             let platform = String(checkBoxFunction("platform")).replaceAll(',', '/')
             let gamemode = checkBoxFunction("gamemode")
-            let fullName = name + ' ' + platform + ':' + String(gamemode)
-            if (fullName.length > 32) {
+            function fullName(name, platform, gamemode) {
+                return name + ' ' + platform + ':' + String(gamemode)
+            }
+            if (fullName(name, platform, gamemode).length > 32) {
                 const newModes = []
                 for (const mode of gamemode) {
                     newMode = mode.substring(0, 1)
@@ -23,10 +25,19 @@
                 }
                 gamemode = newModes;
             }
-            
-            document.getElementById("name").innerHTML = name
-            document.getElementById("platform").innerHTML = platform
-            document.getElementById("gamemode").innerHTML = String(gamemode).replaceAll(',', '/')
+            if (fullName(name, platform, gamemode).length > 32) {
+                document.getElementById('output').style.display = 'none';
+                document.getElementById('errorDiv').style.display = '';
+
+
+                
+            } else {
+                document.getElementById('output').style.display = '';
+                document.getElementById('errorDiv').style.display = 'none';
+                document.getElementById("name").innerHTML = name
+                document.getElementById("platform").innerHTML = platform
+                document.getElementById("gamemode").innerHTML = String(gamemode).replaceAll(',', '/')
+            }
         }
 
         // copy text button, needs to be a div with id="wikiText"
@@ -103,6 +114,9 @@
         <div class="actions hide">
             <input class="button is-primary" type="submit" value="Show Name" onclick="showName()">
             <input class="button is-warning" type="reset" value="Reset Inputs" onclick="resetInputs()">
+        </div>
+        <div class="error" id="errorDiv" style="display: none">
+            Your nickname exceeds 32 characters. Please find a way to shorten it down or ask any @Mentor in the Discord.
         </div>
         <div id="output">
             Paste this into any text chat on the EisHub server:
