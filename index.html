@@ -9,19 +9,24 @@
     <script>
         function showName() {
             let name = document.getElementById("name_input").value
-            let platform = document.getElementById("platform_input").value
-            let mode = document.getElementById("gamemode_input").value
-            let fullName = name + ' ' + platform + ':' + mode
+            let platform = String(checkBoxFunction("platform")).replaceAll(',', '/')
+            let gamemode = checkBoxFunction("gamemode")
+            let fullName = name + ' ' + platform + ':' + String(gamemode)
             if (fullName.length > 32) {
-                mode = mode.substring(0, 1)
-                if (mode == 'P') {
-                    mode = 'PD';
+                const newModes = []
+                for (const mode of gamemode) {
+                    newMode = mode.substring(0, 1)
+                    if (newMode == 'P') {
+                        newMode = 'PD';
+                    }
+                    newModes.push(newMode)
                 }
+                gamemode = newModes;
             }
-
+            
             document.getElementById("name").innerHTML = name
             document.getElementById("platform").innerHTML = platform
-            document.getElementById("gamemode").innerHTML = mode
+            document.getElementById("gamemode").innerHTML = String(gamemode).replaceAll(',', '/')
         }
 
         // copy text button, needs to be a div with id="wikiText"
@@ -46,9 +51,21 @@
         }
 
         function resetInputs() {
-            document.getElementById("name_input").value = ''
-            document.getElementById("platform_input").value = ''
-            document.getElementById("gamemode_input").value = ''
+            document.getElementById('name_input').value = ''
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked')
+            for (const checkbox of checkboxes) {
+                checkbox.checked = false
+            }
+            showName()
+        }
+
+        // detects multiple checkboxes with same name and puts them into array
+        function checkBoxFunction(checkboxName) {
+            const checkboxes = document.querySelectorAll('input[name="' + checkboxName + '"]:checked'), values = [];
+            Array.prototype.forEach.call(checkboxes, function (el) {
+                values.push(el.value);
+            });
+            return values;
         }
     </script>
 </head>
@@ -62,20 +79,25 @@
                 <input type="text" id="name_input">
             </div>
             <div class="inputDiv">
-                <label>Select your platform:</label>
-                <select id="platform_input">
-                    <option value="">
-                    <option value="PC">PC
-                    <option value="PS">PS
-                    <option value="XB">Xbox
-                </select>
+                <label>Select your platform(s):</label>
+                <div class="platformCheckboxes">
+                    <input name="platform" id="pc" type="checkbox" value="PC"><label for="pc">&nbsp;PC</label>
+                    <input name="platform" id="ps" type="checkbox" value="PS"><label for="ps">&nbsp;PS</label>
+                    <input name="platform" id="xb" type="checkbox" value="XB"><label for="xb">&nbsp;Xbox</label>
+                </div>
             </div>
             <div class="inputDiv">
-                <label>Select your game mode:</label>
-                <input id="normal" type="checkbox" value="Normal"><label for="normal">&nbsp;Normal</label>
-                <input id="survival" type="checkbox" value="Survival"><label for="survival">&nbsp;Survival</label>
-                <input id="permadeath" type="checkbox" value="Permadeath"><label for="permadeath">&nbsp;Permadeath</label>
-                <input id="creative" type="checkbox" value="Creative"><label for="creative">&nbsp;Creative</label>
+                <label>Select your game mode(s):</label>
+                <div class="modeCheckboxes">
+                    <input name="gamemode" id="normal" type="checkbox" value="Normal"><label
+                        for="normal">&nbsp;Normal</label>
+                    <input name="gamemode" id="survival" type="checkbox" value="Survival"><label
+                        for="survival">&nbsp;Survival</label>
+                    <input name="gamemode" id="permadeath" type="checkbox" value="Permadeath"><label
+                        for="permadeath">&nbsp;Permadeath</label>
+                    <input name="gamemode" id="creative" type="checkbox" value="Creative"><label
+                        for="creative">&nbsp;Creative</label>
+                </div>
             </div>
         </form>
         <div class="actions hide">
