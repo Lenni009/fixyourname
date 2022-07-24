@@ -2,126 +2,135 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Fix your name</title>
-    <link rel="stylesheet" href="./styles.css">
-    <script>
-        function showName() {
-            let name = document.getElementById("name_input").value
-            let platform = String(checkBoxFunction("platform")).replaceAll(',', '/')
-            let gamemode = checkBoxFunction("gamemode")
-            function fullName(name, platform, gamemode) {
-                return name + ' ' + platform + ':' + String(gamemode)
-            }
-            if (fullName(name, platform, gamemode).length > 32) {
-                const newModes = []
-                for (const mode of gamemode) {
-                    newMode = mode.substring(0, 1)
-                    if (newMode == 'P') {
-                        newMode = 'PD';
-                    }
-                    newModes.push(newMode)
-                }
-                gamemode = newModes;
-            }
-            if (fullName(name, platform, gamemode).length > 32) {
-                document.getElementById("btn").style.display = 'none';
-                document.getElementById('output').style.display = 'none';
-                document.getElementById('errorDiv').style.display = '';
-                document.getElementById('errorDiv').innerHTML = 'Your nickname exceeds 32 characters. Please find a way to shorten it down or ask any @Mentor in the Discord.';
-            } else if (checkBoxFunction('platform').length == 0 || checkBoxFunction('gamemode').length == 0 || document.getElementById('name_input').value == '') {
-                document.getElementById("btn").style.display = 'none';
-                document.getElementById('output').style.display = 'none';
-                document.getElementById('errorDiv').style.display = '';
-                document.getElementById('errorDiv').innerHTML = 'Please provide a name and check at least one platform and gamemode.';
-            } else {
-                document.getElementById("btn").style.display = '';
-                document.getElementById('output').style.display = '';
-                document.getElementById('errorDiv').style.display = 'none';
-                document.getElementById("name").innerHTML = name
-                document.getElementById("platform").innerHTML = platform
-                document.getElementById("gamemode").innerHTML = String(gamemode).replaceAll(',', '/')
-            }
-        }
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Fix your name</title>
+	<link rel="stylesheet" href="./styles.css">
+	<script>
+		function showName() {
+			let name = document.getElementById("name_input").value
+			let platform = checkBoxFunction("platform")
+			let gamemode = checkBoxFunction("gamemode")
+			function fullName(name, platform, gamemode) {
+				return name + ' ' + String(platform).replaceAll(',', '/') + ':' + String(gamemode).replaceAll(',', '/')
+			}
+			if (platform.length == 3) {
+				platform = ['All']
+			}
+			if (fullName(name, platform, gamemode).length > 32) {
+				const newModes = []
+				if (gamemode.length == 4) {
+					newModes.push('All')
+				} else {
+				for (const mode of gamemode) {
+						newMode = mode.substring(0, 1)
+					}
+					if (newMode == 'P') {
+						newMode = 'PD';
+					}
+					newModes.push(newMode)
+				}
+				gamemode = newModes;
+			}
+			if (fullName(name, platform, gamemode).length > 32) {
+				document.getElementById("btn").style.display = 'none';
+				document.getElementById('output').style.display = 'none';
+				document.getElementById('errorDiv').style.display = '';
+				document.getElementById('errorDiv').innerHTML = 'Your nickname exceeds 32 characters. Please find a way to shorten it down or ask any @Mentor in the Discord.';
+			} else if (checkBoxFunction('platform').length == 0 || checkBoxFunction('gamemode').length == 0 || document.getElementById('name_input').value == '') {
+				document.getElementById("btn").style.display = 'none';
+				document.getElementById('output').style.display = 'none';
+				document.getElementById('errorDiv').style.display = '';
+				document.getElementById('errorDiv').innerHTML = 'Please provide a name and check at least one platform and gamemode.';
+			} else {
+				document.getElementById("btn").style.display = '';
+				document.getElementById('output').style.display = '';
+				document.getElementById('errorDiv').style.display = 'none';
+				document.getElementById("name").innerHTML = fullName(name, platform, gamemode)
+			}
+			if (platform[0] == gamemode[0]) {
+				console.log(document.getElementById("name").innerHTML)
+				document.getElementById("name").innerHTML = document.getElementById("name").innerHTML.replace('All:All', 'Yes')
+			}
+		}
 
-        function copyText(codeId, inputId) {
-            const copyTextContent = document.getElementById(codeId).innerText
-            const fullName = document.getElementById('outputDiv').innerText
-            navigator.clipboard.writeText(copyTextContent)
+		function copyText(codeId, inputId) {
+			const copyTextContent = document.getElementById(codeId).innerText
+			const fullName = document.getElementById('outputDiv').innerText
+			navigator.clipboard.writeText(copyTextContent)
 
-            document.getElementById(inputId).innerHTML = 'Copied!'
-            setTimeout(() => {
-                document.getElementById(inputId).innerHTML = 'Copy command'
-            }, 1500)
-        }
+			document.getElementById(inputId).innerHTML = 'Copied!'
+			setTimeout(() => {
+				document.getElementById(inputId).innerHTML = 'Copy command'
+			}, 1500)
+		}
 
-        function resetInputs() {
-            document.getElementById('name_input').value = ''
-            const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked')
-            for (const checkbox of checkboxes) {
-                checkbox.checked = false
-            }
-            showName()
-        }
+		function resetInputs() {
+			document.getElementById('name_input').value = ''
+			const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked')
+			for (const checkbox of checkboxes) {
+				checkbox.checked = false
+			}
+			showName()
+		}
 
-        // detects multiple checkboxes with same name and puts them into array
-        function checkBoxFunction(checkboxName) {
-            const checkboxes = document.querySelectorAll('input[name="' + checkboxName + '"]:checked'), values = [];
-            Array.prototype.forEach.call(checkboxes, function (el) {
-                values.push(el.value);
-            });
-            return values;
-        }
-    </script>
+		// detects multiple checkboxes with same name and puts them into array
+		function checkBoxFunction(checkboxName) {
+			const checkboxes = document.querySelectorAll('input[name="' + checkboxName + '"]:checked'), values = [];
+			Array.prototype.forEach.call(checkboxes, function (el) {
+				values.push(el.value);
+			});
+			return values;
+		}
+	</script>
 </head>
 
 <body>
-    <div class="container" style="width: min(500px, 90%);">
-        <h1 class="title">Fix your name</h1>
-        <form>
-            <div class="inputDiv">
-                <label for="name_input">Enter your name:</label>
-                <input type="text" id="name_input">
-            </div>
-            <div class="inputDiv">
-                <label>Select your platform(s):</label>
-                <div class="platformCheckboxes">
-                    <input name="platform" id="pc" type="checkbox" value="PC"><label for="pc">&nbsp;PC</label>
-                    <input name="platform" id="ps" type="checkbox" value="PS"><label for="ps">&nbsp;PS</label>
-                    <input name="platform" id="xb" type="checkbox" value="XB"><label for="xb">&nbsp;Xbox</label>
-                </div>
-            </div>
-            <div class="inputDiv">
-                <label>Select your game mode(s):</label>
-                <div class="modeCheckboxes">
-                    <input name="gamemode" id="normal" type="checkbox" value="Normal"><label
-                        for="normal">&nbsp;Normal</label>
-                    <input name="gamemode" id="survival" type="checkbox" value="Survival"><label
-                        for="survival">&nbsp;Survival</label>
-                    <input name="gamemode" id="permadeath" type="checkbox" value="Permadeath"><label
-                        for="permadeath">&nbsp;Permadeath</label>
-                    <input name="gamemode" id="creative" type="checkbox" value="Creative"><label
-                        for="creative">&nbsp;Creative</label>
-                </div>
-            </div>
-        </form>
-        <div class="actions hide">
-            <input class="button is-primary" type="submit" value="Show Name" onclick="showName()">
-            <input class="button is-warning" type="reset" value="Reset Inputs" onclick="resetInputs()">
-        </div>
-        <div class="error" id="errorDiv" style="display: none">
-        </div>
-        <div id="output" style="display: none">
-            Paste this into any text chat on the EisHub server:
-            <div class="Name" id="outputDiv">/nick <output id="name"></output> <output id="platform"></output>:<output
-                    id="gamemode"></output></div>
-        </div>
-        <div>
-            <button style="display: none" id="btn" class="button is-outlined is-primary" onclick="copyText('outputDiv', 'btn')">Copy
-                command</button>
-        </div>
-    </div>
+	<div class="container" style="width: min(500px, 90%);">
+		<h1 class="title">Fix your name</h1>
+		<form>
+			<div class="inputDiv">
+				<label for="name_input">Enter your name:</label>
+				<input type="text" id="name_input">
+			</div>
+			<div class="inputDiv">
+				<label>Select your platform(s):</label>
+				<div class="platformCheckboxes">
+					<input name="platform" id="pc" type="checkbox" value="PC"><label for="pc">&nbsp;PC</label>
+					<input name="platform" id="ps" type="checkbox" value="PS"><label for="ps">&nbsp;PS</label>
+					<input name="platform" id="xb" type="checkbox" value="XB"><label for="xb">&nbsp;Xbox</label>
+				</div>
+			</div>
+			<div class="inputDiv">
+				<label>Select your game mode(s):</label>
+				<div class="modeCheckboxes">
+					<input name="gamemode" id="normal" type="checkbox" value="Normal"><label
+						for="normal">&nbsp;Normal</label>
+					<input name="gamemode" id="survival" type="checkbox" value="Survival"><label
+						for="survival">&nbsp;Survival</label>
+					<input name="gamemode" id="permadeath" type="checkbox" value="Permadeath"><label
+						for="permadeath">&nbsp;Permadeath</label>
+					<input name="gamemode" id="creative" type="checkbox" value="Creative"><label
+						for="creative">&nbsp;Creative</label>
+				</div>
+			</div>
+		</form>
+		<div class="actions hide">
+			<input class="button is-primary" type="submit" value="Show Name" onclick="showName()">
+			<input class="button is-warning" type="reset" value="Reset Inputs" onclick="resetInputs()">
+		</div>
+		<div class="error" id="errorDiv" style="display: none">
+		</div>
+		<div id="output" style="display: none">
+			Paste this into any text chat on the EisHub server:
+			<div class="Name" id="outputDiv">/nick <output id="name"></output></output></div>
+		</div>
+		<div>
+			<button style="display: none" id="btn" class="button is-outlined is-primary"
+				onclick="copyText('outputDiv', 'btn')">Copy
+				command</button>
+		</div>
+	</div>
 </body>
 
 </html>
