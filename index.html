@@ -28,9 +28,11 @@
             if (fullName(name, platform, gamemode).length > 32) {
                 document.getElementById('output').style.display = 'none';
                 document.getElementById('errorDiv').style.display = '';
-
-
-                
+                document.getElementById('errorDiv').innerHTML = 'Your nickname exceeds 32 characters. Please find a way to shorten it down or ask any @Mentor in the Discord.';
+            } else if (checkBoxFunction('platform').length == 0 || checkBoxFunction('gamemode').length == 0 || document.getElementById('name_input').value == '') {
+                document.getElementById('output').style.display = 'none';
+                document.getElementById('errorDiv').style.display = '';
+                document.getElementById('errorDiv').innerHTML = 'Please provide a name and check at least one platform and gamemode.';
             } else {
                 document.getElementById('output').style.display = '';
                 document.getElementById('errorDiv').style.display = 'none';
@@ -116,7 +118,6 @@
             <input class="button is-warning" type="reset" value="Reset Inputs" onclick="resetInputs()">
         </div>
         <div class="error" id="errorDiv" style="display: none">
-            Your nickname exceeds 32 characters. Please find a way to shorten it down or ask any @Mentor in the Discord.
         </div>
         <div id="output">
             Paste this into any text chat on the EisHub server:
