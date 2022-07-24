@@ -22,13 +22,14 @@
 				if (gamemode.length == 4) {
 					newModes.push('All')
 				} else {
+					let newMode;
 					for (const mode of gamemode) {
 						newMode = mode.substring(0, 1)
+						if (newMode == 'P') {
+							newMode = 'PD';
+						}
+						newModes.push(newMode)
 					}
-					if (newMode == 'P') {
-						newMode = 'PD';
-					}
-					newModes.push(newMode)
 				}
 				gamemode = newModes;
 			}
