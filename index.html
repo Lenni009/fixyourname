@@ -26,14 +26,17 @@
                 gamemode = newModes;
             }
             if (fullName(name, platform, gamemode).length > 32) {
+                document.getElementById("btn").style.display = 'none';
                 document.getElementById('output').style.display = 'none';
                 document.getElementById('errorDiv').style.display = '';
                 document.getElementById('errorDiv').innerHTML = 'Your nickname exceeds 32 characters. Please find a way to shorten it down or ask any @Mentor in the Discord.';
             } else if (checkBoxFunction('platform').length == 0 || checkBoxFunction('gamemode').length == 0 || document.getElementById('name_input').value == '') {
+                document.getElementById("btn").style.display = 'none';
                 document.getElementById('output').style.display = 'none';
                 document.getElementById('errorDiv').style.display = '';
                 document.getElementById('errorDiv').innerHTML = 'Please provide a name and check at least one platform and gamemode.';
             } else {
+                document.getElementById("btn").style.display = '';
                 document.getElementById('output').style.display = '';
                 document.getElementById('errorDiv').style.display = 'none';
                 document.getElementById("name").innerHTML = name
@@ -119,13 +122,13 @@
         </div>
         <div class="error" id="errorDiv" style="display: none">
         </div>
-        <div id="output">
+        <div id="output" style="display: none">
             Paste this into any text chat on the EisHub server:
             <div class="Name" id="outputDiv">/nick <output id="name"></output> <output id="platform"></output>:<output
                     id="gamemode"></output></div>
         </div>
         <div>
-            <button id="btn" class="button is-outlined is-primary" onclick="copyText('outputDiv', 'btn')">Copy
+            <button style="display: none" id="btn" class="button is-outlined is-primary" onclick="copyText('outputDiv', 'btn')">Copy
                 command</button>
         </div>
     </div>
