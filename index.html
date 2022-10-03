@@ -8,27 +8,26 @@
 	<link rel="stylesheet" href="./styles.css">
 	<script>
 		function showName() {
-			let name = document.getElementById("name_input").value
-			let platform = checkBoxFunction("platform")
-			let gamemode = checkBoxFunction("gamemode")
+			let name = document.getElementById("name_input").value;
+			let platform = checkBoxFunction("platform");
+			let gamemode = checkBoxFunction("gamemode");
+			const platformNr = document.querySelectorAll(".platformCheckboxes>input").length;
 			function fullName(name, platform, gamemode) {
-				return name + ' ' + String(platform).replaceAll(',', '/') + ':' + String(gamemode).replaceAll(',', '/')
+				return name + ' ' + String(platform).replaceAll(',', '/') + ':' + String(gamemode).replaceAll(',', '/');
 			}
-			if (platform.length == 3) {
-				platform = ['All']
-			}
+			if (platform.length == platformNr) platform = ['All'];
+
 			if (fullName(name, platform, gamemode).length > 32) {
-				const newModes = []
+				const newModes = [];
 				if (gamemode.length == 4) {
-					newModes.push('All')
+					newModes.push('All');
 				} else {
 					let newMode;
 					for (const mode of gamemode) {
-						newMode = mode.substring(0, 1)
-						if (newMode == 'P') {
-							newMode = 'PD';
-						}
-						newModes.push(newMode)
+						newMode = mode.substring(0, 1);
+						if (newMode == 'P') newMode = 'PD';
+
+						newModes.push(newMode);
 					}
 				}
 				gamemode = newModes;
@@ -47,32 +46,30 @@
 				document.getElementById("btn").style.display = '';
 				document.getElementById('output').style.display = '';
 				document.getElementById('errorDiv').style.display = 'none';
-				document.getElementById("name").innerHTML = fullName(name, platform, gamemode)
+				document.getElementById("name").innerHTML = fullName(name, platform, gamemode);
 			}
-			if (platform[0] == gamemode[0]) {
-				console.log(document.getElementById("name").innerHTML)
-				document.getElementById("name").innerHTML = document.getElementById("name").innerHTML.replace('All:All', 'Yes')
-			}
+			if (platform[0] == gamemode[0]) document.getElementById("name").innerHTML = document.getElementById("name").innerHTML.replace('All:All', 'Yes');
 		}
 
 		function copyText(codeId, inputId) {
-			const copyTextContent = document.getElementById(codeId).innerText
-			const fullName = document.getElementById('outputDiv').innerText
-			navigator.clipboard.writeText(copyTextContent)
+			const copyTextContent = document.getElementById(codeId).innerText;
+			const fullName = document.getElementById('outputDiv').innerText;
+			navigator.clipboard.writeText(copyTextContent);
 
-			document.getElementById(inputId).innerHTML = 'Copied!'
+			const preText = document.getElementById(inputId).innerHTML;
+			document.getElementById(inputId).innerHTML = 'Copied!';
 			setTimeout(() => {
-				document.getElementById(inputId).innerHTML = 'Copy command'
-			}, 1500)
+				document.getElementById(inputId).innerHTML = preText;
+			}, 1500);
 		}
 
 		function resetInputs() {
-			document.getElementById('name_input').value = ''
-			const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked')
+			document.getElementById('name_input').value = '';
+			const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
 			for (const checkbox of checkboxes) {
-				checkbox.checked = false
+				checkbox.checked = false;
 			}
-			showName()
+			showName();
 			document.getElementById('errorDiv').style.display = 'none';
 		}
 
@@ -102,6 +99,7 @@
 					<input name="platform" id="pc" type="checkbox" value="PC"><label for="pc">&nbsp;PC</label>
 					<input name="platform" id="ps" type="checkbox" value="PS"><label for="ps">&nbsp;PS</label>
 					<input name="platform" id="xb" type="checkbox" value="XB"><label for="xb">&nbsp;Xbox</label>
+					<input name="platform" id="sw" type="checkbox" value="SW"><label for="sw">&nbsp;Switch</label>
 				</div>
 			</div>
 			<div class="inputDiv">

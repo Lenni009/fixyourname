@@ -30,22 +30,17 @@ body {
 	margin: 3px 0px;
 }
 
-.modeCheckboxes {
+.modeCheckboxes,
+.platformCheckboxes {
 	display: grid;
 	grid-template-columns: auto auto auto auto;
 	justify-content: left;
 	column-gap: 3px;
 }
 
-.modeCheckboxes>label {
+.modeCheckboxes>label,
+.platformCheckboxes>label {
 	margin-right: 15px;
-}
-
-.platformCheckboxes {
-	display: grid;
-	column-gap: 3px;
-	grid-template-columns: auto auto;
-	justify-content: left;
 }
 
 button {
