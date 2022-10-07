@@ -12,6 +12,7 @@
 			let platform = checkBoxFunction("platform");
 			let gamemode = checkBoxFunction("gamemode");
 			const platformNr = document.querySelectorAll(".platformCheckboxes>input").length;
+			const modeNr = document.querySelectorAll(".modeCheckboxes>input").length;
 			function fullName(name, platform, gamemode) {
 				return name + ' ' + String(platform).replaceAll(',', '/') + ':' + String(gamemode).replaceAll(',', '/');
 			}
@@ -19,7 +20,7 @@
 
 			if (fullName(name, platform, gamemode).length > 32) {
 				const newModes = [];
-				if (gamemode.length == 4) {
+				if (gamemode.length == modeNr) {
 					newModes.push('All');
 				} else {
 					let newMode;
@@ -113,6 +114,8 @@
 						for="permadeath">&nbsp;Permadeath</label>
 					<input name="gamemode" id="creative" type="checkbox" value="Creative"><label
 						for="creative">&nbsp;Creative</label>
+					<input name="gamemode" id="relaxed" type="checkbox" value="Relaxed"><label
+						for="relaxed">&nbsp;Relaxed</label>
 				</div>
 			</div>
 		</form>
