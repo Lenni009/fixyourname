@@ -17,19 +17,17 @@
 				return name + ' ' + String(platform).replaceAll(',', '/') + ':' + String(gamemode).replaceAll(',', '/');
 			}
 			if (platform.length == platformNr) platform = ['All'];
+			if (gamemode.length == modeNr) gamemode = ['All'];
 
 			if (fullName(name, platform, gamemode).length > 32) {
 				const newModes = [];
-				if (gamemode.length == modeNr) {
-					newModes.push('All');
-				} else {
-					let newMode;
-					for (const mode of gamemode) {
-						newMode = mode.substring(0, 1);
-						if (newMode == 'P') newMode = 'PD';
+				let newMode;
+				for (const mode of gamemode) {
+					newMode = mode.substring(0, 1);
+					if (newMode == 'P') newMode = 'PD';
+					if (newMode == 'A') newMode = 'All';
 
-						newModes.push(newMode);
-					}
+					newModes.push(newMode);
 				}
 				gamemode = newModes;
 			}
@@ -108,14 +106,8 @@
 				<div class="modeCheckboxes">
 					<input name="gamemode" id="normal" type="checkbox" value="Normal"><label
 						for="normal">&nbsp;Normal</label>
-					<input name="gamemode" id="survival" type="checkbox" value="Survival"><label
-						for="survival">&nbsp;Survival</label>
 					<input name="gamemode" id="permadeath" type="checkbox" value="Permadeath"><label
 						for="permadeath">&nbsp;Permadeath</label>
-					<input name="gamemode" id="creative" type="checkbox" value="Creative"><label
-						for="creative">&nbsp;Creative</label>
-					<input name="gamemode" id="relaxed" type="checkbox" value="Relaxed"><label
-						for="relaxed">&nbsp;Relaxed</label>
 				</div>
 			</div>
 		</form>
